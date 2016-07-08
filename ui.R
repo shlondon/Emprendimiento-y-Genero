@@ -6,7 +6,7 @@ library(psych)
 
 source("funciones.R")
 bdu1 <<- basedatos("GEM APS Key Indicators 2001 - 2015.xls")
-bdu3 <<- read.csv("datosnuevos.csv")
+bdu3 <<- read.csv("GEM_2012_Brecha_Genero.csv")
 
 
 shinyUI(fluidPage(
