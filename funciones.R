@@ -60,31 +60,33 @@ library(ggplot2)
 #defecto esta el nombre de "a_nivel_mundial" que permitirá gráficar
 #la brecha de género que existe en la actividad emprendedora
 bd_x_pais <- function(nacion = "a_nivel_mundial", lin = 0, ejx = 0, ejy = 0){
-   if(nacion == "a_nivel_mundial"){
+  if(nacion == "a_nivel_mundial"){
     #Función que recibe una lista, creada previamente con el codigo anterior
     #y luego grafica la brecha de género para todos los paises
-      mas <- sapply(bdu1, function(x)
-      {mean(as.numeric(x[,c("Teayymal")]))})
-      fem <- sapply(bdu1, function(x)
-      {mean(as.numeric(x[,c("Teayyfem")]))})
-      g <- c(mas, fem)
-      tiempo <- rep(2001:2015, 2)
-      genero <- c(rep("masculino", 15), rep("femenino", 15))
-      df1 <- data.frame(TEA = g, periodo = tiempo, genero = genero)
-      
-      g1 <- ggplot(df1, aes(x = tiempo, y = TEA, colour = genero))
-      g1 + geom_line(size = lin) + 
-        xlab("Tiempo") +  ylab("TEA") +
-        scale_x_continuous(limits = c(df1$periodo[1] - ejx, df1$periodo[dim(df1)[1]] + ejx), 
-                           breaks = seq(df1$periodo[1] - 1, df1$periodo[dim(df1)[1]] + 1, 1),
-                           expand = c(0, 0)) +
-        scale_y_continuous(limits = c(min(c(min(na.omit(df1$TEA)), min(na.omit(df1$TEA)))) - ejy,
-                                      max(c(max(na.omit(df1$TEA)), max(na.omit(df1$TEA)))) + ejy), 
-                           breaks = seq(min(c(min(na.omit(df1$TEA)), min(na.omit(df1$TEA))))-1,
-                                        max(c(max(na.omit(df1$TEA)), max(na.omit(df1$TEA))))+1,
-                                        10),
-                           expand = c(0, 0))
- 
+    mas <- sapply(bdu1, function(x)
+    {mean(as.numeric(x[,c("Teayymal")]))})
+    fem <- sapply(bdu1, function(x)
+    {mean(as.numeric(x[,c("Teayyfem")]))})
+    g <- c(mas, fem)
+    tiempo <- rep(2001:2015, 2)
+    genero <- c(rep("masculino", 15), rep("femenino", 15))
+    df1 <- data.frame(TEA = g, periodo = tiempo, genero = genero)
+    
+    g1 <- ggplot(df1, aes(x = tiempo, y = TEA, colour = genero))
+    g1 + geom_line(size = lin) + 
+      xlab("Tiempo") +  ylab("TEA") +
+      scale_x_continuous(limits = c(df1$periodo[1] - ejx, df1$periodo[dim(df1)[1]] + ejx), 
+                         breaks = seq(df1$periodo[1] - 1, df1$periodo[dim(df1)[1]] + 1, 1),
+                         expand = c(0, 0)) +
+      scale_y_continuous(limits = c(min(c(min(na.omit(df1$TEA)), min(na.omit(df1$TEA)))) - ejy,
+                                    max(c(max(na.omit(df1$TEA)), max(na.omit(df1$TEA)))) + ejy), 
+                         breaks = seq(min(c(min(na.omit(df1$TEA)), min(na.omit(df1$TEA))))-1,
+                                      max(c(max(na.omit(df1$TEA)), max(na.omit(df1$TEA))))+1,
+                                      10),
+                         expand = c(0, 0)) + 
+      geom_point() + 
+      geom_text(aes(label=round(TEA,1)), colour="black", size=3)
+    
   }else{
     #Crea un vector con la Tea femenina según el argumento nacion
     fem <- sapply(1:length(bdu1), function(x){
@@ -124,16 +126,18 @@ bd_x_pais <- function(nacion = "a_nivel_mundial", lin = 0, ejx = 0, ejy = 0){
                          breaks = seq(min(c(min(na.omit(df1$Tea)), min(na.omit(df1$Tea))))-1,
                                       max(c(max(na.omit(df1$Tea)), max(na.omit(df1$Tea))))+1,
                                       10),
-                         expand = c(0, 0))
+                         expand = c(0, 0)) +
+      geom_point() + 
+      geom_text(aes(label=round(Tea,1)), colour="black", size=3)
   }
-                
+  
 }
 
 #Función que extrae el nombre de los paises que han participado en el proyecto GEM
 #(Solo extrae los nombres de los dos periodos donde participaron más paises, 
 #esto sugiere que potencialmente pueden haber más paises)
 nombre_paises <- function(){
-
+  
   #Creo una lista que me permite observar la cantidad de paises que han participado por año
   mm <- lapply(1:15, function(x){bdu1[[x]][,1]})
   
@@ -189,7 +193,9 @@ disparidad <- function(nacion = "a_nivel_mundial", lin = 0, ejx = 0, ejy = 0){
                          breaks = seq(min(c(min(na.omit(df1$Disparidad)), min(na.omit(df1$Disparidad))))-1,
                                       max(c(max(na.omit(df1$Disparidad)), max(na.omit(df1$Disparidad))))+1,
                                       5),
-                         expand = c(0, 0))
+                         expand = c(0, 0)) +
+      geom_point() + 
+      geom_text(aes(label=round(Disparidad,1)), colour="black", size=3,hjust=2,vjust=1)
     
     
   }else{
@@ -221,7 +227,9 @@ disparidad <- function(nacion = "a_nivel_mundial", lin = 0, ejx = 0, ejy = 0){
                          breaks = seq(min(c(min(na.omit(df1$Disparidad)), min(na.omit(df1$Disparidad))))-1,
                                       max(c(max(na.omit(df1$Disparidad)), max(na.omit(df1$Disparidad))))+1,
                                       5),
-                         expand = c(0, 0))
+                         expand = c(0, 0)) +
+      geom_point() + 
+      geom_text(aes(label=round(Disparidad,1)), colour="black", size=3)
   }
   
 }
@@ -298,20 +306,21 @@ Est_disp <- function(nacion = "a_nivel_mundial"){
   }
 }
 
-
+#Función que imprime el resultado de la función summary(), luego de 
+#aplicar un logistic model
 model1 <- function(nacion = "a_nivel_mundial"){
   if(nacion == "a_nivel_mundial"){
-    summary(lm(formula = tea ~ GEMOCCU + GEMHHINC + GEMEDUC + gender + age9c +
-                 knowent + opport + suskill + fearfail + gender*GEMOCCU +
-                 gender*GEMHHINC + gender*age9c + gender*knowent +
-                 gender*opport + gender*suskill + gender*fearfail, data = bdu3))
+    summary(glm(formula = TEAyy ~ gender*age + I(age^2) + gender*GEMEDUC + gender*GEMWORK3 + gender*GEMHHINC +
+                  gender*opport + gender*suskill + gender*fearfail + gender*nbgoodc + 
+                  gender*nbstatus +  gender*knowent + gender*nbmedia, 
+                family = "binomial", data = bdu3))
     
   }else{
     bdu4 <- bdu3[bdu3$country == nacion, ]
-    summary(lm(formula = tea ~ GEMOCCU + GEMHHINC + GEMEDUC + gender + age9c +
-                 knowent + opport + suskill + fearfail + gender*GEMOCCU +
-                 gender*GEMHHINC + gender*age9c + gender*knowent +
-                 gender*opport + gender*suskill + gender*fearfail, data = bdu4))
+    summary(glm(formula = TEAyy ~ gender*age + I(age^2) + gender*GEMEDUC + gender*GEMWORK3 + gender*GEMHHINC +
+                  gender*opport + gender*suskill + gender*fearfail + gender*nbgoodc + 
+                  gender*nbstatus +  gender*knowent + gender*nbmedia, 
+                family = "binomial", data = bdu4))
   }
 }
 
