@@ -11,38 +11,38 @@ bdu3 <<- read.csv("base_datos_sin_NA.csv")
 bdu3 <<-bdu3[,-1]
 
 shinyUI(fluidPage(
-  titlePanel("Emprendimiento y Genero"),
+  titlePanel("Emprendimiento, Genero y GEM"),
   tabsetPanel(type = "tabs",
               tabPanel("Grafica brecha de genero en la TEA",
-                       sidebarLayout(sidebarPanel(selectInput(inputId = "pais",
+                       sidebarLayout(sidebarPanel(width=3,selectInput(inputId = "pais",
                                                               label = "Elige un pais",
                                                               choices = nombre_paises()),
                                                   sliderInput(inputId = "tamlinea",
-                                                              label = "Grosor linea en cada uno de los graficos",
+                                                              label = "Elige el grosor de las lineas",
                                                               min = 0,
                                                               max = 10,
                                                               value = 0,
                                                               step = 1,
                                                               format="$#,##0", locale="us", animate=TRUE),
                                                   sliderInput(inputId = "rangex",
-                                                              label = "Elige la escala del eje x en cada uno de los graficos",
+                                                              label = "Elige la escala del eje x",
                                                               min = 0,
-                                                              max = 100,
+                                                              max = 10,
                                                               value = 0,
-                                                              step = 0.01,
+                                                              step = 1,
                                                               format="$#,##0", locale="us", animate=TRUE),
                                                   sliderInput(inputId = "rangey",
-                                                              label = "elige la escala del eje y en cada uno de los graficos",
+                                                              label = "Elige la escala del eje y",
                                                               min = 0,
-                                                              max = 100,
+                                                              max = 10,
                                                               value = 0,
-                                                              step = 0.01,
+                                                              step = 1,
                                                               format="$#,##0", locale="us", animate=TRUE)
+                                                  ),
+                                     mainPanel(plotOutput("distPlot")))
                        ),
-                       mainPanel(plotOutput("distPlot")))
-              ),
               tabPanel("Grafica disparidad de genero en la TEA",
-                       sidebarLayout(sidebarPanel(selectInput(inputId = "pais2",
+                       sidebarLayout(sidebarPanel(width=3,selectInput(inputId = "pais2",
                                                               label = "Elige un pais",
                                                               choices = nombre_paises()),
                                                   sliderInput(inputId = "tamlinea2",
@@ -55,21 +55,21 @@ shinyUI(fluidPage(
                                                   sliderInput(inputId = "rangex2",
                                                               label = "Elige la escala del eje x en cada uno de los graficos",
                                                               min = 0,
-                                                              max = 10,
+                                                              max = 2,
                                                               value = 0,
-                                                              step = 0.001,
+                                                              step = 0.01,
                                                               format="$#,##0", locale="us", animate=TRUE),
                                                   sliderInput(inputId = "rangey2",
                                                               label = "elige la escala del eje y en cada uno de los graficos",
                                                               min = 0,
-                                                              max = 10,
+                                                              max = 2,
                                                               value = 0,
-                                                              step = 0.001,
+                                                              step = 0.01,
                                                               format="$#,##0", locale="us", animate=TRUE)),
                                      mainPanel(plotOutput("disparidad"))) 
-              ),
-              tabPanel("Modelos de regresion logistica",
-                       sidebarLayout(sidebarPanel(width=2,
+                       ),
+              tabPanel("Modelos de regresion logistica binomial multivariado",
+                       sidebarLayout(sidebarPanel(width=3,
                                                   selectInput(inputId = "pais3",
                                                               label = "Elige un pais",
                                                               choices = nombre_paises() ),
@@ -98,10 +98,28 @@ shinyUI(fluidPage(
                                 sliderInput("col","Elige el numero de columnas para tu grafico",
                                             min = 1,max = 20,
                                             value = 2)))
+                       ),
+              tabPanel("Documentacion",
+                       sidebarLayout(
+                         sidebarPanel(
+                           p(img(src="GEM-logo.png", heigth=200,width=350)),
+                           p("El proposito del proyecto Global Entrepreneurship
+                              Monitor, GEM, es examinar el papel que tiene
+                             el emprendimiento como fuerza impulsora del
+                             crecimiento economico a lo largo del mundo. El
+                             proyecto aspira a capturar informacion sobre el
+                             desarrollo de todas las actividades que conduzcan
+                             a la creacion de nuevos negocios en los diferentes
+                             paises. Para mayor informacion sobre este proyecto
+                             consultar el sitio oficial http://www.gemconsortium.org")
+                         ),
+                         mainPanel(
+                           includeMarkdown("README.md")
+                         )
+                       ))
               )
+          
+  )
   )
   
-)
-)
-
 
