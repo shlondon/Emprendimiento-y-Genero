@@ -1,4 +1,4 @@
-# Emprendimiento, Genero y GEM
+# Brecha de género en el emprendimiento
 
 Este aplicativo es construido para aquellas personas 
 interesadas en analizar el emprendimiento desde un enfoque de genero.

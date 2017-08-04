@@ -11,7 +11,7 @@ bdu3 <<- read.csv("base_datos_sin_NA.csv")
 bdu3 <<-bdu3[,-1]
 
 shinyUI(fluidPage(
-  titlePanel("Emprendimiento, Genero y GEM"),
+  titlePanel("Brecha de genero en el emprendimiento"),
   tabsetPanel(type = "tabs",
               tabPanel("Grafica brecha de genero en la TEA",
                        sidebarLayout(sidebarPanel(width=3,selectInput(inputId = "pais",
